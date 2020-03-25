@@ -9,25 +9,24 @@ public class GenerateCube : MonoBehaviour
 
     
 
-    public GameObject coinObj;
+    public GameObject obstacleObj;
     Vector3 pos;
     bool next;
     public float[] posX;
     public float[] posZ;
-    public float[] posY;
     int value = 1;
     public int lastPos = 1;
-   /* public Text scoreboard;
+    public Text score;
     public Text gameover;
-    private int score = 0;*/
+    
 
 
     void Start()
     {
-        /*score = 0;
-        gameover.text = "";*/
+        
     }
 
+    
     void FixedUpdate()
     {
         StartCoroutine(WaitSys());
@@ -35,7 +34,7 @@ public class GenerateCube : MonoBehaviour
 
     IEnumerator WaitSys()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         next = true;
         Generate();
     }
@@ -47,28 +46,25 @@ public class GenerateCube : MonoBehaviour
         int i = Random.Range(0, 2);
         pos.x = posX[i];
         pos.z += posZ[i];
-        pos.y = 0.35f;
-        GameObject cubeClone = Instantiate(coinObj, pos, coinObj.transform.rotation);
-        cubeClone.GetComponent<CubeScript>().myNum = value;
-        cubeClone.transform.SetParent(this.transform);
+        GameObject obstacleClone = Instantiate(obstacleObj, pos, obstacleObj.transform.rotation);
+        obstacleClone.GetComponent<ObstacleScript>().myNum = value;
+        obstacleClone.transform.SetParent(this.transform);
         value += 1;
         next = false;
     }
 
     public void Message(int i)
     {
-        if (lastPos == i)
-        {
-            lastPos += 1;
-            
-            Debug.Log("Found");
-        }
-        else
-        {
-            Debug.Log("Not Found");
-            SceneManager.LoadScene("AI Project",LoadSceneMode.Single);
-        }
+        Debug.Log("Score is :" + i);
+        score.text = "Score: " + i;
+        gameover.text = "Game Over!!";
+        loadNewGame();
+        
+    }
 
+    void loadNewGame()
+    {
+        SceneManager.LoadScene("AI Project", LoadSceneMode.Single);
     }
 }
 

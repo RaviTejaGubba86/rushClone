@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
         //transform.position = new Vector3();
-        transform.Translate(new Vector3(0, 0, 2) * Time.deltaTime);
+        transform.Translate(new Vector3(0, 0, 3) * Time.deltaTime);
         transform.position = new Vector3(value, transform.position.y, transform.position.z);
         if (Input.GetKey(KeyCode.RightArrow))
         {
